@@ -1,78 +1,102 @@
 <template>
-  <div class="form_container">
-    <div class="form_example">
-      <h3>Input data form</h3>
+  <!--Componentización v-model, v-if, two binding un conjunto modelo de datos todos-->
+  <div class="todo_list" v-if="todos.length > 0">
 
-      <form @submit.prevent="processData">
-        <div class="form_control">
-          <label for="text">text</label>
-          <input type="text" name="text" v-model="FormData.text">
-        </div>
-        <div class="form_control">
-          <label for="radio">radio</label><br>
-          A<input type="radio" name="radio" v-model="FormData.radio" value="A"><br>
-          B<input type="radio" name="radio" v-model="FormData.radio" value="B"><br>
-          C<input type="radio" name="radio" v-model="FormData.radio" value="C"><br>
-        </div>
-      
-      <div class="form_control">
-        <label for="longText">checkbox</label>
-        <textarea name="longText" v-model="FormData.longText" />
-      </div><br>
-      <div class="form_control">
-        <labe for="select">Frutas:</labe>
-        <select name="select" v-model="FormData.select">
-          <option value="" select>---selecciona---</option>
-          <option value="patatas">patatas</option>
-          <option value="manzanas">manzanas</option>
-          <option value="peras">peras</option>
-        </select>
-      </div><br>
-      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Enviar</button>
+    <div class="todo_item" v-for="(todo, i) in todos" :key="i">
+      <div class="todo_title">
+        <h3 :contenteditable="todo.editing">{{ todo.title }}</h3>
+      </div>
+      <div class="todo_actions">
+        <span class="remove" @click="removeTodo">remove</span>
+        <span class="edit" @click="editTodo">edit</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="todo_emtp_list" v-else>No hay to-dos todavia :</div>
+
+  <div class="todo_form">
+    <form @submit.prevent="addTodo">
+      <input type="text" placeholder="Mete un nuevo todo" v-model="newTodoForm.text">
+      <button type="submit">Enviar</button>
     </form>
-    </div>
-    <div class="form_output">
-      <h3>Output data form</h3>
-      <pre>{{ FormData }}</pre>
-    </div>
-  
   </div>
 </template>
 
 <script>
 export default {
-  // config del component
+  // config del component modelo de datos
   data() {
     return {
-      FormData: {
-        text: "Juan",
-        longText: "Carlos",
-        checkbox: true,
-        radio: "A",
-        select: ""
-      }
+      todos: [
+        {
+          title: "prueba",
+          editing: false
+        },
+        {
+          title: "adiós",
+          editing: false
+        },
+        {
+          title: "23123",
+          editing: false
+        },
+        {
+          title: "asdasd",
+          editing: false
+        },
+      ],
+      newTodoForm: {
+        text: ""
 
+      }
+    }
+
+  },
+
+  methods: {
+    addTodo() {
+      this.todos.push({
+        title: this.newTodoForm.text,
+        editing: false
+      })
+      this.newTodoForm.text=""
+    },
+    removeTodo(i) {
+      this.todos.splice(i, 1)
+    },
+    editTodo(i) {
+      this.todos[i].editing= true
     }
   },
-  methods:{
-    processData(){
-      alert(JSON.stringify(this.FormData))
-    }
-  }
-
 }
 
 </script>
 
 <style lang="sass" scoped>
-.form_container
-  @apply min-h[200px] flex gap-4 mx-auto max-w-5xl w-11/12
-  h3 
-    @apply font-bold mb-4
-  .form_example
-    @apply flex-1
-    .form_control
-      @apply flex flex-col gap-2 mb-4
- 
-
+.todo_list
+  @apply mx-outo max-w-3xl w-11/12 divide-y divide-blue-500
+  .todo_item
+    @apply flex justify-between items-center py-2
+    .todo_title h3 
+      @apply font-bold
+    .todo_actions
+      @apply flex gap-2
+      .remove
+      @apply px-2 py-1 text-sm border-pink-500 rounded-r-full border min-w-[80px] text-center
+      @apply cursor-pointer 
+      .edit
+      @apply px-2 py-1 text-sm border-bue-500 rounded-r-full border min-w-[80px] text-center
+      @apply cursor-pointer 
+.todo_empty_list
+  @apply mx-auto max-w-3xl w-11/12
+.todo_form
+    @apply mx-outo max-w-3xl w-11/12 py-2
+    from
+      @apply flex gap-2
+      input
+        @apply w-full border p-2
+    button
+      @apply px-2 text-sm bg-blue-500 text-white rounded-full border min-w-[80px] text-center
+      @apply cursor-pointer
 </style>
