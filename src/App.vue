@@ -1,30 +1,31 @@
 <template>
   <!--Componentización v-model, v-if, two binding un conjunto modelo de datos todos-->
-  <div class="todo_list" v-if="todos.length > 0">
+ <todo-list 
+   v-if="todos.length > 0" 
+  :todo-list-content="todos" 
+  :editHandler="editTodo" 
+  :removeHandler="removeTodo"/>
 
-    <div class="todo_item" v-for="(todo, i) in todos" :key="i">
-      <div class="todo_title">
-        <h3 :contenteditable="todo.editing">{{ todo.title }}</h3>
-      </div>
-      <div class="todo_actions">
-        <span class="remove" @click="removeTodo">remove</span>
-        <span class="edit" @click="editTodo">edit</span>
-      </div>
-    </div>
-  </div>
+ <todo-emtp-list  v-else/>
 
-  <div class="todo_emtp_list" v-else>No hay to-dos todavia :</div>
+ <todo-form v-bind="o"
+ :form-content="newTodoForm" 
+ :submit-handler="addTodo"/>
 
-  <div class="todo_form">
-    <form @submit.prevent="addTodo">
-      <input type="text" placeholder="Mete un nuevo todo" v-model="newTodoForm.text">
-      <button type="submit">Enviar</button>
-    </form>
-  </div>
+  
 </template>
 
 <script>
+import TodoForm from './components/TodoForm.vue'
+import TodoList from './components/TodoList.vue'
+import Todo_emtp_list from './components/todo_emtp_list.vue'
+
 export default {
+  components: {
+     TodoList,
+     Todo_emtp_list, 
+     TodoForm 
+    },
   // config del component modelo de datos
   data() {
     return {
@@ -60,20 +61,25 @@ export default {
         title: this.newTodoForm.text,
         editing: false
       })
-      this.newTodoForm.text=""
+      this.newTodoForm.text = ""
     },
     removeTodo(i) {
       this.todos.splice(i, 1)
     },
     editTodo(i) {
-      this.todos[i].editing= true
+      this.todos[i].editing = true
     }
   },
+  mounted() {
+    window.addEventListener("click", (ev) => {
+      this.todos.forEach(todo => { todo.editing = false })
+    })
+  }
 }
 
 </script>
 
-<style lang="sass" scoped>
+<!-- <style lang="sass" scoped>
 .todo_list
   @apply mx-outo max-w-3xl w-11/12 divide-y divide-blue-500
   .todo_item
@@ -99,4 +105,4 @@ export default {
     button
       @apply px-2 text-sm bg-blue-500 text-white rounded-full border min-w-[80px] text-center
       @apply cursor-pointer
-</style>
+</style> -->
