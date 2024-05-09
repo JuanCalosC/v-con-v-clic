@@ -1,5 +1,6 @@
 <template>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <br>
+    <div class="todo_lista">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 todo_form">
             <tbody>
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -7,11 +8,10 @@
                         <th scope="col" class="px-6 py-3">
                             Product name
                             <div class="flex flex-col items-center gap-2 todo_list">
-                                <TodoItem v-for="(todo, i) in todoListContent" 
-                                :key="i" 
-                                :todo="todo" 
-                                :editHandler="editHandler" 
-                                :removeHandler="removeHandler"/>
+                                <TodoItem v-for="(todo, i) in todoListContent" :key="i" 
+                                    :todo="todo"
+                                    :editHandler="editHandler" 
+                                    :removeHandler="removeHandler" />
                             </div>
                         </th>
                     </tr>
@@ -24,8 +24,8 @@
 <script>
 import TodoItem from './TodoItem.vue';
 export default {
-   components: { TodoItem },
-props: ["todoListContent", "removeHandler", "editHandler"]
+    components: { TodoItem },
+    props: ["todoListContent", "removeHandler", "editHandler"]
 }
 </script>
 

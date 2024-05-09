@@ -1,12 +1,13 @@
 <template>
   <!--Componentización v-model, v-if, two binding un conjunto modelo de datos todos-->
- <todo-list 
+ <dummy-component :greet="'Juan'"/>
+  <todo-list 
    v-if="todos.length > 0" 
   :todo-list-content="todos" 
   :editHandler="editTodo" 
   :removeHandler="removeTodo"/>
 
- <todo-emtp-list  v-else/>
+ <todo-empty-list  v-else/>
 
  <todo-form v-bind="o"
  :form-content="newTodoForm" 
@@ -18,12 +19,13 @@
 <script>
 import TodoForm from './components/TodoForm.vue'
 import TodoList from './components/TodoList.vue'
-import Todo_emtp_list from './components/todo_emtp_list.vue'
+import TodoEmptyList from './components/TodoEmptyList.vue'
+import DummyComponent from './components/DummyComponent.vue'
 
 export default {
   components: {
      TodoList,
-     Todo_emtp_list, 
+     TodoEmptyList, 
      TodoForm 
     },
   // config del component modelo de datos

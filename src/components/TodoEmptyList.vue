@@ -1,5 +1,5 @@
 <template>
-  <div class="todo_emtp_list">No hay to-dos todavia :</div>
+  <div class="todo_empty_list">No hay to-dos todavia :</div>
 </template>
 
 <script>
