@@ -1,12 +1,10 @@
 <template>
-<div>
-<h1>{{ greet }}</h1>
-</div>
+    <slot />
 </template>
 
 <script>
 export default {
-    props: ["greet"]
+  
 }
 </script>
 

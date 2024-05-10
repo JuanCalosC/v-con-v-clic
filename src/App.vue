@@ -1,19 +1,25 @@
 <template>
-  <!--Componentización v-model, v-if, two binding un conjunto modelo de datos todos-->
- <dummy-component :greet="'Juan'"/>
-  <todo-list 
-   v-if="todos.length > 0" 
-  :todo-list-content="todos" 
-  :editHandler="editTodo" 
-  :removeHandler="removeTodo"/>
+    <!--Componentización v-model, v-if, two binding un conjunto modelo de datos todos-->
+    <dummy-component>
+      hola te quedan {{ todos.length }} cosas por hacer..
+    </dummy-component>
 
- <todo-empty-list  v-else/>
+    <todo-list v-if="todos.length > 0">
+      
 
- <todo-form v-bind="o"
- :form-content="newTodoForm" 
- :submit-handler="addTodo"/>
+      <todo-item v-for="(todo, i) in todos" 
+          :key="i" :todo="todo" 
+          :editHandler="editTodo"
+          :removeHandler="removeTodo" />
 
-  
+    </todo-list>
+
+    <todo-empty-list v-else />
+
+   <todo-form 
+    :form-content="newTodoForm" 
+    :submit-handler="addTodo" />
+ 
 </template>
 
 <script>
@@ -21,13 +27,17 @@ import TodoForm from './components/TodoForm.vue'
 import TodoList from './components/TodoList.vue'
 import TodoEmptyList from './components/TodoEmptyList.vue'
 import DummyComponent from './components/DummyComponent.vue'
-
+import './components/TodoItem.vue'
+import TodoItem from './components/TodoItem.vue'
 export default {
   components: {
-     TodoList,
-     TodoEmptyList, 
-     TodoForm 
-    },
+    TodoList,
+    TodoEmptyList,
+    TodoForm,
+    DummyComponent,
+    TodoItem,
+    TodoItem
+  },
   // config del component modelo de datos
   data() {
     return {
@@ -58,7 +68,7 @@ export default {
   },
 
   methods: {
-    addTodo() {
+    addTodo(ev) {
       this.todos.push({
         title: this.newTodoForm.text,
         editing: false
