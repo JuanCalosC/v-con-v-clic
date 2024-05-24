@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .todo_list
   @apply mx-outo max-w-3xl w-11/12 divide-y divide-blue-500
   .todo_item

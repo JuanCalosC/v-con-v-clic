@@ -8,7 +8,8 @@
       
 
       <todo-item v-for="(todo, i) in todos" 
-          :key="i" :todo="todo" 
+          :key="i" 
+          :todo="todo" 
           :editHandler="editTodo"
           :removeHandler="removeTodo" />
 
@@ -19,6 +20,10 @@
    <todo-form 
     :form-content="newTodoForm" 
     :submit-handler="addTodo" />
+
+   <button-base  text="Enviar" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"/>
+   <button-base  text="'Enviar'" />
+   
  
 </template>
 
@@ -29,15 +34,22 @@ import TodoEmptyList from './components/TodoEmptyList.vue'
 import DummyComponent from './components/DummyComponent.vue'
 import './components/TodoItem.vue'
 import TodoItem from './components/TodoItem.vue'
+import ButtonBase from './components/ButtonBase.vue'
+
+
 export default {
+  // components: registrar otros componentes
   components: {
     TodoList,
     TodoEmptyList,
     TodoForm,
     DummyComponent,
     TodoItem,
-    TodoItem
+    ButtonBase
+    
   },
+
+  // props:
   // config del component modelo de datos
   data() {
     return {
@@ -91,7 +103,7 @@ export default {
 
 </script>
 
-<!-- <style lang="sass" scoped>
+<!-- <style lang="scss" scoped>
 .todo_list
   @apply mx-outo max-w-3xl w-11/12 divide-y divide-blue-500
   .todo_item
